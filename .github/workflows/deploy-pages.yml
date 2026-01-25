@@ -29,10 +29,12 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: NODE_ENV=production npm ci
+        run: npm ci
 
       - name: Build
-        run: NODE_ENV=production  npm run build
+        run: npm run build
+        env:
+          VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
