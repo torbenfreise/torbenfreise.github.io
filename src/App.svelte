@@ -1,5 +1,7 @@
 <script lang="ts">
-  const messagePromise = fetch("http://localhost:8080/api/hello")
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const messagePromise = fetch(`${backendUrl}/api/hello`)
     .then(async (res) => {
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
