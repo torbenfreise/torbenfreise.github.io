@@ -11,7 +11,7 @@
 
 	let { data }: PageProps = $props();
 
-	let secret = $state(data.post.secret);
+	let secret = $state('ORXXEYTFNYXGM4TFNFZWKQDHNVQWS3BOMNXW2SCFJZHEORKDJBAUYTCFJZDUKMBQGQ======');
 
 	let algorithm = $state<HashAlgorithm>('sha1');
 
@@ -44,19 +44,6 @@
 		now = Date.now();
 	}, 1000);
 	const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
-
-	function updateUrl(value: string) {
-		const params = new URLSearchParams(page.url.searchParams);
-
-		if (value) params.set('secret', value);
-		else params.delete('secret');
-
-		goto(`?${params.toString()}`, {
-			replaceState: true,
-			noScroll: true,
-			keepFocus: true
-		});
-	}
 
 	onDestroy(() => clearInterval(interval));
 </script>
@@ -129,12 +116,7 @@
 					<div class="space-y-1">
 						<label for="secret" class="text-sm font-medium text-gray-600">Base32 Secret </label>
 
-						<input
-							id="secret"
-							class="w-full"
-							bind:value={secret}
-							oninput={() => updateUrl(secret)}
-						/>
+						<input id="secret" class="w-full" bind:value={secret} />
 					</div>
 
 					<!-- Result -->
