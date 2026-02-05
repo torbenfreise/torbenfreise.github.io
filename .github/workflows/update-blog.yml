@@ -35,6 +35,7 @@ jobs:
           IGNORE_LIST=(
             "src/lib/blog/.github/workflows"
             "src/lib/blog/README.md"
+            "src/lib/blog/LICENSE"
           )
 
           # Unstage ignored paths
