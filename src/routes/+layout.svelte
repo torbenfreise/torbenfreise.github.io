@@ -54,7 +54,7 @@
 
 		<div class="flex justify-center">
 			<div class="flex space-x-8">
-				<FooterIcon href="https:www.linkedin.com/in/torbenfreise">
+				<FooterIcon href="https://www.linkedin.com/in/torbenfreise">
 					<LinkedinSolid
 						class="h-7 w-7 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 					/>
