@@ -1,0 +1,3 @@
+[submodule "src/lib/blog"]
+	path = src/lib/blog
+	url = git@github.com:torbenfreise/blog.git

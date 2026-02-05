@@ -1,5 +1,24 @@
 <script lang="ts">
 	let subtitle = 'Welcome to my SvelteKit site!';
+	export async function load() {
+		const modules = import.meta.glob('./articles/*.md');
+
+		const articles = await Promise.all(
+			Object.entries(modules).map(async ([path, resolver]) => {
+				const mod = await resolver();
+				const slug = path.split('/').pop()?.replace('.md', '');
+
+				return {
+					slug,
+					...mod.metadata
+				};
+			})
+		);
+
+		return {
+			articles: articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+		};
+	}
 </script>
 
 <section class="home">
@@ -11,24 +30,3 @@
 		<p>This is the about section on the homepage.</p>
 	</section>
 </section>
-
-<style>
-	.home {
-		text-align: center;
-		padding: 2rem;
-	}
-
-	.home h1 {
-		font-size: 2.5rem;
-		margin-bottom: 1rem;
-	}
-
-	.about {
-		margin-top: 2rem;
-	}
-
-	.about h2 {
-		font-size: 2rem;
-		color: teal;
-	}
-</style>
