@@ -2,16 +2,23 @@
 	import { generate, type HashAlgorithm } from 'otplib';
 	import type { PageProps } from './$types';
 	import { type Digits } from '@otplib/core';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { Progressbar } from 'flowbite-svelte';
 	import { Clipboard } from 'flowbite-svelte';
 	import { CheckOutline, ClipboardCleanSolid } from 'flowbite-svelte-icons';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 
-	let { data }: PageProps = $props();
-
 	let secret = $state('ORXXEYTFNYXGM4TFNFZWKQDHNVQWS3BOMNXW2SCFJZHEORKDJBAUYTCFJZDUKMBQGQ======');
+
+	onMount(() => {
+		const params = new URLSearchParams(window.location.search);
+		const fromUrl = params.get('secret');
+
+		if (fromUrl) {
+			secret = fromUrl;
+		}
+	});
 
 	let algorithm = $state<HashAlgorithm>('sha1');
 
@@ -44,6 +51,19 @@
 		now = Date.now();
 	}, 1000);
 	const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
+
+	function updateUrl(value: string) {
+		const params = new URLSearchParams(window.location.search);
+
+		if (value) params.set('secret', value);
+		else params.delete('secret');
+
+		goto(`?${params.toString()}`, {
+			replaceState: true,
+			noScroll: true,
+			keepFocus: true
+		});
+	}
 
 	onDestroy(() => clearInterval(interval));
 </script>
@@ -116,7 +136,12 @@
 					<div class="space-y-1">
 						<label for="secret" class="text-sm font-medium text-gray-600">Base32 Secret </label>
 
-						<input id="secret" class="w-full" bind:value={secret} />
+						<input
+							id="secret"
+							class="w-full"
+							bind:value={secret}
+							oninput={() => updateUrl(secret)}
+						/>
 					</div>
 
 					<!-- Result -->
