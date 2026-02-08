@@ -4,28 +4,15 @@
 
 	import {
 		Navbar,
-		NavBrand,
 		NavLi,
 		NavUl,
 		NavHamburger,
 		Dropdown,
 		DropdownItem,
-		DropdownDivider,
-		FooterLinkGroup,
 		Footer,
-		FooterBrand,
-		FooterCopyright,
-		FooterIcon,
-		FooterLink
+		FooterIcon
 	} from 'flowbite-svelte';
-	import {
-		ChevronDownOutline,
-		DiscordSolid,
-		FacebookSolid,
-		GithubSolid,
-		LinkedinSolid,
-		TwitterSolid
-	} from 'flowbite-svelte-icons';
+	import { ChevronDownOutline, GithubSolid, LinkedinSolid } from 'flowbite-svelte-icons';
 	import { page } from '$app/state';
 	let { children } = $props();
 	let activeUrl = $derived(page.url.pathname);
@@ -41,7 +28,7 @@
 			Projects<ChevronDownOutline class="ms-2 inline h-6 w-6 text-primary-800 dark:text-white" />
 		</NavLi>
 		<Dropdown simple class="w-44">
-			<DropdownItem href="/projects/totp">TOTP generator</DropdownItem>
+			<DropdownItem href="https://totp.torbenfreise.dev">TOTP generator</DropdownItem>
 		</Dropdown>
 		<NavLi href="/blog">Blog</NavLi>
 	</NavUl>

@@ -5,5 +5,4 @@ excerpt: This blog entry is about stuff
 published: true
 ---
 
-
 Full article content here…

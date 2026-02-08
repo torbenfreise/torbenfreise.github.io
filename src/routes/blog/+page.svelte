@@ -1,45 +1,42 @@
 <script lang="ts">
-	import { Timeline, TimelineItem } from 'flowbite-svelte';
-	import { CalendarWeekSolid } from 'flowbite-svelte-icons';
+	import { Group } from 'flowbite-svelte';
 	import type { PageData } from './$types';
+	import { formatDate } from '$lib/utils/date';
+	import { resolve } from '$app/paths';
 
 	export let data: PageData;
-	const articles = data.articles.map((a) => ({
-		...a,
-		date: new Date(a.date) // normalize
-	}));
+	const articles = data.articles;
 </script>
 
-<Timeline order="vertical">
-	{#each articles as article}
-		<TimelineItem
-			title={article.title}
-			date={`Posted on ${article.date.toLocaleDateString(undefined, {
-				day: '2-digit',
-				month: '2-digit',
-				year: 'numeric'
-			})}`}
-		>
-			{#snippet orientationSlot()}
-				<span
-					class="absolute -left-4 flex h-6 w-6 items-center justify-center rounded-full
-          bg-primary-200 ring-8 ring-white
-          dark:bg-primary-900 dark:ring-gray-900"
+<Group>
+	<ol class="divide-y divide-gray-100 dark:divide-gray-800">
+		{#each articles as article (article.slug)}
+			<li class="py-3">
+				<a
+					href={resolve('/blog/[slug]', { slug: article.slug })}
+					class="group block rounded-md px-4 py-3 transition-colors duration-150 ease-in-out hover:bg-gray-50 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 dark:hover:bg-gray-800 dark:hover:shadow-lg"
+					aria-label={`Read ${article.title}`}
 				>
-					<CalendarWeekSolid class="h-4 w-4 text-primary-600 dark:text-primary-400" />
-				</span>
-			{/snippet}
+					<div class="flex items-start gap-4">
+						<div class="min-w-0">
+							<h3
+								class="text-xl leading-tight font-semibold text-gray-900 transition-colors duration-150 group-hover:text-primary-700 dark:text-white dark:group-hover:text-primary-300"
+							>
+								{article.title}
+							</h3>
+							<div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+								{formatDate(article.date)}
+							</div>
 
-			<p class="mb-4 pl-4 text-base font-normal text-gray-500 dark:text-gray-400">
-				{article.excerpt}
-			</p>
-
-			<a
-				href={`/blog/${article.slug}`}
-				class="pl-4 text-primary-600 hover:underline dark:text-primary-400"
-			>
-				Read article →
-			</a>
-		</TimelineItem>
-	{/each}
-</Timeline>
+							<p
+								class="mt-1 truncate text-sm text-gray-500 transition-colors duration-150 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300"
+							>
+								{article.excerpt}
+							</p>
+						</div>
+					</div>
+				</a>
+			</li>
+		{/each}
+	</ol>
+</Group>
