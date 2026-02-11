@@ -1,11 +1,13 @@
 <script lang="ts">
-	let subtitle = 'Welcome to my SvelteKit site!';
 </script>
+
+<svelte:head>
+	<title>Torben Freise</title>
+	<meta name="description" content="" />
+</svelte:head>
 
 <section class="home">
 	<h1>Home Page</h1>
-	<p>{subtitle}</p>
-
 	<section class="about">
 		<h2>About</h2>
 		<p>This is the about section on the homepage.</p>

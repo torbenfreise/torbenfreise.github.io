@@ -8,6 +8,11 @@
 	const articles = data.articles;
 </script>
 
+<svelte:head>
+	<title>Torben Freise - Blog</title>
+	<meta name="description" content="" />
+</svelte:head>
+
 <Group>
 	<ol class="divide-y divide-gray-100 dark:divide-gray-800">
 		{#each articles as article (article.slug)}
